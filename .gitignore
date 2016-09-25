@@ -1,7 +1,6 @@
 .atom
 .idea
 .DS_Store
-
-.o
-.exe
-.out
+*.o
+*.exe
+*.out
