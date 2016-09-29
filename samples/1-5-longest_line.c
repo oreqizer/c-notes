@@ -25,7 +25,7 @@ int main() {
     return 0;
 }
 
-int readline(char s[], int lim) {  // TODO fix
+int readline(char s[], int lim) {
     int c, i;
     for (i = 0; i < lim-1 && (c = getchar()) != EOF && c != '\n'; i++) {
         s[i] = c;
