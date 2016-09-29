@@ -3,9 +3,10 @@
 #define MAXLINE 1000
 
 int readline(char line[], int maxline);
+void clear(char line[], int len);
 int detectcomment(char line[], int len, int in_comment);
 int clearline(char line[], int len, int in_comment);
-void clear(char line[], int len, int start, int end);
+void replace(char line[], int len, int start, int end);
 
 int main() {
     int len;
@@ -20,6 +21,7 @@ int main() {
     int in_dq_string = 0;
 
     char prev = -1; // will never be a valid char
+    char prev2 = -1; // will never be a valid char
     int next_comment;
     while ((len = readline(line, MAXLINE)) > 0) {
         next_comment = detectcomment(line, len, in_comment);
@@ -37,18 +39,27 @@ int main() {
                 }
             }
 
+            // check for negative brackets
+            if (bround < 0) { printf("Mismatched ( ).\n"); return 1; }
+            if (bsquare < 0) { printf("Mismatched [ ].\n"); return 1; }
+            if (bcurly < 0) { printf("Mismatched { }.\n"); return 1; }
+            if (in_dq_string < 0) { printf("Mismatched \" \".\n"); return 1; }
+            if (in_sq_string < 0) { printf("Mismatched ' '.\n"); return 1; }
+
             // TODO there's a weird bug with mismatched ( ) in this 'if':
             if (line[i] == '\''
                 && !in_dq_string
-                && !(in_sq_string && prev == '\\')) {
+                && !(in_sq_string && prev == '\\' && prev2 != '\\')) {
                 in_sq_string = !in_sq_string;
             } else if (line[i] == '\"'
                 && !in_sq_string
-                && !(in_dq_string && prev == '\\')) {
+                && !(in_dq_string && prev == '\\' && prev2 != '\\')) {
                 in_dq_string = !in_dq_string;
             }
+            prev2 = prev;
             prev = line[i];
         }
+        clear(line, MAXLINE);
         in_comment = next_comment;
     }
 
@@ -72,6 +83,12 @@ int readline(char s[], int lim) {
         i++;
     }
     return i;
+}
+
+void clear(char s[], int len) {
+    for (int i = 0; i < len; i++) {
+        s[i] = '\0';
+    }
 }
 
 int detectcomment(char s[], int len, int in_comment) {
@@ -101,14 +118,15 @@ int clearline(char s[], int len, int in_comment) {
         if (in_comment) {
             if (prev == '*' && s[i] == '/') {
                 in_comment = 0;
-                clear(s, len, start, i + 1);
+                replace(s, len, start, i + 1);
                 newlen -= i - start + 1;
             }
         } else {
             // single-line comment
             if (prev == '/' && s[i] == '/') {
-                clear(s, len, i - 1, len);
+                replace(s, len, i - 1, len);
                 newlen -= len - i + 1;
+                s[newlen - 1] = '\n';
                 break;
             }
 
@@ -122,13 +140,13 @@ int clearline(char s[], int len, int in_comment) {
     }
     // line ends with a comment
     if (in_comment) {
-        clear(s, len, start, len);
+        replace(s, len, start, len);
         newlen -= len - start;
     }
     return newlen;
 }
 
-void clear(char s[], int len, int start, int end) {
+void replace(char s[], int len, int start, int end) {
     int shift = end - start;
     for (int i = start; i < len; i++) {
         s[i] = s[i + shift];
