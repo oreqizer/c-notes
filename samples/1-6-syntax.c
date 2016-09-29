@@ -46,7 +46,6 @@ int main() {
             if (in_dq_string < 0) { printf("Mismatched \" \".\n"); return 1; }
             if (in_sq_string < 0) { printf("Mismatched ' '.\n"); return 1; }
 
-            // TODO there's a weird bug with mismatched ( ) in this 'if':
             if (line[i] == '\''
                 && !in_dq_string
                 && !(in_sq_string && prev == '\\' && prev2 != '\\')) {
@@ -68,6 +67,7 @@ int main() {
     if (bcurly) { printf("Mismatched { }.\n"); return 1; }
     if (in_dq_string) { printf("Mismatched \" \".\n"); return 1; }
     if (in_sq_string) { printf("Mismatched ' '.\n"); return 1; }
+    if (in_comment) { printf("Unclosed comment.\n"); return 1; }
 
     printf("OK.\n");
     return 0;
