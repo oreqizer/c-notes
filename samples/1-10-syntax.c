@@ -1,3 +1,4 @@
+/* Exercise 1-24 */
 #include <stdio.h>
 
 #define MAXLINE 1000
