@@ -39,7 +39,7 @@ void printstuff() {
 const char* stuff = "stuffs to print";
 ```
 
-It is a good practice to **not** declare any global variables if possible. If really needed, all global variables should be at the *top* of a file for clarity.
+> **Note:** It is a good practice to **not** declare any global variables if possible. If really needed, all global variables should be at the *top* of a file for clarity.
 
 ### Symbolic constants
 
