@@ -22,7 +22,7 @@ Pretty standard stuff: `<`, `>`, `>=`, `<=`, `!=`, `==`, `!`, `&&` and `||`.
 
 Precedence *high* to *low*:
 
-* all *arithmetic* operators
+* `!`
 * `<`, `>`, `>=` and `<=`
 * `!=` and `==`
 * `&&`
@@ -43,3 +43,35 @@ int readlim(char s[], int lim) {
 ```
 
 > If it wasn't for lazy evaluation, `i < lim - 1 && (s[i] = getchar()) != EOF` would result in an unexpected behavior. `i < lim - 1` makes sure the whole expression ends before we try to assign something to `s[lim]`.
+
+### Increment & decrement
+
+Increment is `++`, decrement `--`. Both alter the value by 1. They can be *prefix* or *suffix*. The value of the expression:
+
+* **prefix** as *after* the change
+* **suffix** as *before* the change
+
+```c
+int i = 0;
+printf("%d\n", ++i);  // 1
+printf("%d\n", i++);  // 1
+printf("%d\n", i);    // 2
+printf("%d\n", --i);  // 1
+printf("%d\n", i--);  // 1
+printf("%d\n", i);    // 0
+```
+
+These operators can only be applied to *variables*. Something like `(1 + 2)++` is illegal.
+
+### Bitwise
+
+These manipulate **bits** of any given *integer* values:
+
+* `&` - AND
+* `|` - OR
+* `^` - XOR
+* `~` - NOT
+* `<<` - shift left by *n*
+* `>>` - shift right by *n*
+
+> **Note:** Right-shifting fills `unsigned` quantity always with 0s, `signed` depends on the machine - either with 0-bits (logical shift), or sign bits (arithmetic-shift).

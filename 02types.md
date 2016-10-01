@@ -151,4 +151,6 @@ c = i;  // OK due to the previous assignment
 i = f;  // fractional part is lost :(
 ```
 
-**Type casting** is also available in the form `(T)<value>`. -- TODO
+**Type casting** is also available in the form `(T)<value>`, producing a *new* value of the type `T`. Useful when a function expects a specific type (e.g. `sqrt` expects `double`, else producing nonsense).
+
+If arguments are declared by a *function prototype*, types are coerced automatically.
