@@ -21,8 +21,8 @@ int main() {
     int in_sq_string = 0;
     int in_dq_string = 0;
 
-    char prev = -1; // will never be a valid char
-    char prev2 = -1; // will never be a valid char
+    char prev = '\0';
+    char prev2 = '\0';
     int next_comment;
     while ((len = readline(line, MAXLINE)) > 0) {
         next_comment = detectcomment(line, len, in_comment);
@@ -93,7 +93,7 @@ void clear(char s[], int len) {
 }
 
 int detectcomment(char s[], int len, int in_comment) {
-    char prev = -1; // will never be a valid char
+    char prev = '\0';
     for (int i = 0; i < len; i++) {
         if (in_comment) {
             if (prev == '*' && s[i] == '/') in_comment = 0;
@@ -112,7 +112,7 @@ int detectcomment(char s[], int len, int in_comment) {
 }
 
 int clearline(char s[], int len, int in_comment) {
-    char prev = -1; // will never be a valid char
+    char prev = '\0';
     int start = 0;
     int newlen = len;
     for (int i = 0; i < len; i++) {

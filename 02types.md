@@ -55,6 +55,8 @@ Alternative radix can be specified with a *prefix*:
 
 An *integer* written as one character within single quotes, like `'x'`. It's a numeric value in the host machine's character set (usually **ASCII**).
 
+> **Note:** although it's guaranteed that a character expression like `'x'` will never have a negative value, arbitrary bit patterns in a `char` may. It's thus better to always explicitly state `signed` or `unsigned`.
+
 They can be manipulated the same way any other *integer* can, though they are most commonly used in comparisons with other `char`s.
 
 Some characters are represented by *escape sequences*, like `'\n'` (newline). Arbitrary byte-sized bit pattern can also be used:
@@ -88,6 +90,13 @@ Strings are an array of characters. They always have the *null character* at the
 
 `strlen` is a standard library function (in `<string.h>`) that determines the string length *excluding* the null character.
 
+### Booleans
+
+**C** has no explicit *Boolean* type. It goes by the rules:
+
+* `0` is *false*
+* non-`0` is *true*
+
 ### Enums
 
 Defined using the `enum` keyword. It's a list of constant integer values with names. Default initial value is **0**, subsequent are always larger by 1:
@@ -109,3 +118,37 @@ enum months { JAN = 1, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC };
 ```
 
 Names in an `enum` must be distinct. They are often used as a convenient alternative to `#define` symbolic constants, with the added benefit of debuggers being able to print the enumeration's symbolic form.
+
+### Conversion
+
+Conversions are done by a small number of rules:
+
+* *narrower* to a *wider* type, meaning no information is lost, is done automatically (`int` -> `long`, `int` -> `float`...)
+* expressions that don't make sense, like a `float` as a subscript are disallowed
+* expressions that *may* lose information, e.g. `long` -> `int`, may only raise a warning
+
+Arithmetic operations always convert it's operands to the *wider* one. If no `unsigned` is present, this set of rules is sufficient to remember:
+
+* if `long double` -> `long double`
+* if `double` -> `double`
+* if `float` -> `float`
+* `char` and `short` -> `int`
+* if either operand is `long` convert to `long`
+
+> **Note:** Conversion rules with `unsigned` are more complicated, because they depend on the machine's size of various *integer* types. Suppose `int` is 16bits, `long` is 32 bits, then `1U -> -1L`, which is a `signed long`. But `-1L -> 1UL`, because `-1L` is promoted to `unsigned long`, and appears as a very large number.
+
+Longer *integers* are converted to shorter ones by dropping *high-order bits*.
+
+Conversion is also done in assignment - *value* gets converted to a *type* where it's assigned:
+
+```c
+int i;
+char c = 100;
+float f = 13.37;
+
+i = c;  // OK
+c = i;  // OK due to the previous assignment
+i = f;  // fractional part is lost :(
+```
+
+**Type casting** is also available in the form `(T)<value>`. -- TODO

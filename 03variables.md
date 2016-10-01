@@ -8,9 +8,36 @@ Declared by the syntax `T <name>;`, where `T` is a *type*. We can modify declara
 
 These declarations can be combined, with `extern` being 1st, `const` 2nd. Using all three, we can get something like `extern const T <name> = <value>;`.
 
+### Declaration
+
+Variables must be always declared before use (except when made implicit by context).
+
+We can declare more *variables* of a *type* at the same time:
+
+```c
+int lower, upper, step;
+char c, line[1000];
+```
+
+> **Note:** It is often more convenient to declare one variable per line to allow easy commenting and code formatting.
+
+*External* and *static* variables are initialized to 0 by default. Other variables without an initial value are initialized to a *garbage* (undefined) value.
+
 ### Constants
 
-The `const` keyword is used for variables that won't be changed in the future.
+The `const` keyword is used for variables that won't be changed in the future. Applies to all elements in the context of an *array*.
+
+Functions can have a `const` on *array* arguments to indicate they won't be changed:
+
+```c
+int sum(const int[] nums, int len) {
+    int sum = 0;
+    for (int i = 0; i < len; i++) {
+        sum += nums[i];  // 'nums' not changed
+    }
+    return sum;
+}
+```
 
 ### External variables
 
