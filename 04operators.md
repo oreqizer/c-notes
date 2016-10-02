@@ -75,3 +75,49 @@ These manipulate **bits** of any given *integer* values:
 * `>>` - shift right by *n*
 
 > **Note:** Right-shifting fills `unsigned` quantity always with 0s, `signed` depends on the machine - either with 0-bits (logical shift), or sign bits (arithmetic-shift).
+
+### Assignment
+
+All binary *arithmetic* and *logical* operators (except `~`) have a corresponding **assignment** operator with the form `<expr1> <op>= <expr2>;`:
+
+```c
+int n = 1;
+n += 100;  // 101
+```
+
+Expression on the *right* is always fully evaluated before the assignment is executed:
+
+```c
+int x = 3;
+int y = 5;
+x = x * (y + 2);  // 21
+x *= y + 2;       // 21
+```
+
+### Ternary operator
+
+Known as the *conditional expression*. Syntax is `<condition> ? <expr-1> : <expr-0>` as usual. If `expr-1` and `expr-2` are of different types, *type conversion* rules from [#2](./02types.md) apply, no matter what the result of the condition is.
+
+### Precedence
+
+Refer to this table:
+
+![precedence](assets/operators.png)
+
+Operand execution order is **not** guaranteed! The only exceptions being `&&`, `||`, `?:` and `,`. Thus in:
+
+```c
+printf("%d\n", ++n, power(2, n)); // WRONG!
+a[i] = i++;                       // WRONG!
+```
+
+There's not defined whether `n` is incremented first, or `power(2, n)` is executed first. Don't do that! Store the result of `++n` in a variable:
+
+> **Note:** *Function calls*, nested *assignments*, *increment* and *decrement* cause **side effects** - variables can be changed with the evaluation of the expressions. It is intentionally not specified in which order shall the side effects happen.
+
+```c
+int nplus = ++n;
+printf("%d\n", nplus, power(2, nplus)); // OK
+int iorig = i;
+a[iorig] = ++i;                         // OK
+```
