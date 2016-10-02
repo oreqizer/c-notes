@@ -94,9 +94,32 @@ x = x * (y + 2);  // 21
 x *= y + 2;       // 21
 ```
 
-### Ternary operator
+### Ternary
 
-Known as the *conditional expression*. Syntax is `<condition> ? <expr-1> : <expr-0>` as usual. If `expr-1` and `expr-2` are of different types, *type conversion* rules from [#2](./02types.md) apply, no matter what the result of the condition is.
+Known as the *conditional expression*. Syntax is `<condition> ? <expr-1> : <expr-0>` as usual. If `expr-1` and `expr-2` are of different types, *type conversion* rules from [#2](./02types.md) apply, no matter what the result of the condition is:
+
+```c
+int n = 5;
+n > 5 ? 5.5 : 10;   // double
+n < 5 ? 13.37f : 5; // float
+n == 5 ? 10 : 300l; // long
+```
+
+### Comma
+
+The binary operator `,` makes sure the expressions are evaluated *left* to *right*, and is used mostly in `for` statements to adjust more values:
+
+```c
+int len = 5;
+int i, j;  // NOT the ',' operator
+for (i = 0, j = len - 1; i < len; i++, j--)
+    // 'i' goes from the start
+    // 'j' goes from the end
+```
+
+The *type* and the *value* are those of the *right* operand, `j--` in this case.
+
+> **Note:** Careful! The `,` operator is **not** the same as the function argument or variable declaration separator!
 
 ### Precedence
 
