@@ -41,3 +41,5 @@ double res, tripleme(double number);
 ```
 
 If we don't specify any arguments to a function declaration, the argument checking is *turned off*. This exists for legacy reasons and should be avoided.
+
+To specify that a function has *no arguments*, put `void` instead of the argument list.
