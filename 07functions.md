@@ -13,7 +13,7 @@ Where:
 * `RT` is the function's *return* type. The return *value* is converted to the *type* if needed. It's an implicit `int` if omitted, default value is 0.
 * `...T args` are *0-n* argument declarations of arbitrary types.
 
-A minimal function is `dummy() {}`. Return value can be ignored when calling the function.
+A minimal function is `dummy() {}`. Return value can be ignored when calling the function. Functions **cannot** be declared within other functions.
 
 ### Declaration
 
@@ -43,3 +43,7 @@ double res, tripleme(double number);
 If we don't specify any arguments to a function declaration, the argument checking is *turned off*. This exists for legacy reasons and should be avoided.
 
 To specify that a function has *no arguments*, put `void` instead of the argument list.
+
+### Recursion
+
+**C** functions can be recursive and there's no tail recursion optimization, that's like the only important information you need to know.

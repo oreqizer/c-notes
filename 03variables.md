@@ -50,3 +50,27 @@ void main() {
     float circle = 2 * PI;
 }
 ```
+
+### Initialization
+
+By default, initialization rules are loosely divided to two groups:
+
+**External and static**:
+
+* have initial value of 0
+* initialization value must be a *constant expression*
+
+**Automatic and registered**:
+
+* *garbage* initial value
+* initialization value may be an arbitrary *expression* or a *function* call
+
+These types will be discussed further in [#8](./08scope.md).
+
+*Arrays* can also be initialized with values:
+
+```c
+int days[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+```
+
+The *length* will be the lowest possible if not specified, 12 in this case.

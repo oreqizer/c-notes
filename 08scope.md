@@ -101,3 +101,18 @@ void turbo(register unsigned n) {
 ```
 
 > **Note:** An *automatic* variable is one that is allocated and deallocated automatically when the program flow enters or leaves the variable's scope.
+
+### Block scope
+
+Variables declared inside *blocks* are only visible within that block. If a variable is declared with a name that already exists within an outer scope, it **shadows** the upper one until the end of the block:
+
+```c
+void dummy(int foo) {
+    int bar = 13;
+    if (foo == 37) {
+        int bar = foo - 10;
+        printf("%d\n", bar); // 27
+    }
+    printf("%d\n", bar); // 13
+}
+```
