@@ -4,14 +4,14 @@ Does magics that happen before the compilation itself.
 
 ### Include
 
-The `#include` feature is replaced with the contents of the specified *file*. The file can be specified in two ways. Say we want to include `stdio.h`:
+The `#include` directive is replaced with the contents of the specified *file*. The file can be specified in two ways. Say we want to include `stdio.h`:
 
 * `"stdio.h"` begins the search at the location of the source file
 * `<stdio.h>`, and search when *quoted* file wasn't found, is implementation dependent
 
 ### Macro substitution
 
-The `#define` feature we've seen in [#3](./03variables.md) is capable a lot more than just symbolic constants. Any *name* can be defined with any *replacement text*:
+The `#define` directive we've seen in [#3](./03variables.md) is capable a lot more than just symbolic constants. Any *name* can be defined with any *replacement text*:
 
 ```c
 #define forever for (;;)
@@ -68,7 +68,7 @@ int main() {
 
 ### Conditional inclusion
 
-`#if` evaluates a *constant integer expression* (no function calls allowed). There are corresponding `#else`, `#elif` and `#endif` lines:
+`#if` evaluates a *constant integer expression* (no function calls allowed). There are corresponding `#else`, `#elif` and `#endif` directives:
 
 ```c
 // SYSTEM is a symbol with the system's name
@@ -92,7 +92,7 @@ Theres a `defined` preprocessor function that checks if a name has been defined 
 #endif
 ```
 
-This is useful for not defining the same constant or including the same file multiple times. There are also `#ifdef` and `#ifndef` lines for checking if a name has been defined before:
+This is useful for not defining the same constant or including the same file multiple times. There are also `#ifdef` and `#ifndef` directives for checking if a name has been defined before:
 
 ```c
 #ifndef HDR
