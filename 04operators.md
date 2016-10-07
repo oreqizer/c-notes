@@ -94,6 +94,8 @@ x = x * (y + 2);  // 21
 x *= y + 2;       // 21
 ```
 
+An *assignment* is an *expression* with the value of the left hand side after the assignment. `c = 2 + 5` is itself an expression with the value of **7**.
+
 ### Ternary
 
 Known as the *conditional expression*. Syntax is `<condition> ? <expr-1> : <expr-0>` as usual. If `expr-1` and `expr-2` are of different types, *type conversion* rules from [#2](./02types.md) apply, no matter what the result of the condition is:
